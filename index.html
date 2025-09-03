@@ -3,26 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>이미지 뷰어</title>
+  <title>이미지 뷰어 (비율 고정 · 세로 스크롤 · 좌우 여백)</title>
   <style>
+    /* 기본 배경만 주고, 스크롤은 기본 동작(세로) 그대로 두기 */
     html, body {
       margin: 0;
       padding: 0;
       background: #000;
+      color: #fff;
     }
-    body {
-      padding: 0 64px;       /* 좌우 여백 (64px → 원하시면 다른 값으로 변경 가능) */
+
+    /* 페이지 좌우 여백만 주고, 나머진 브라우저 기본 스크롤 */
+    .page {
+      padding: 0 64px;         /* ←→ 여백: 필요시 숫자만 조절 */
       box-sizing: border-box;
     }
-    img {
-      width: 100%;           /* 화면 가로에 맞춤 */
-      height: auto;          /* 세로 비율 유지 */
+
+    /* 비율 깨짐 방지: 어떤 외부 스타일이 있어도 이 규칙이 이김 */
+    img.viewer {
       display: block;
+      width: auto;             /* 가로는 자동(원본 기준) */
+      max-width: 100%;         /* 화면이 더 좁으면 줄어듦 */
+      height: auto !important; /* 비율 고정(외부 스타일 덮어씀) */
+      margin: 0 auto;          /* 가운데 배치 느낌 */
+      image-rendering: auto;
     }
+
+    /* (선택) 너무 넓은 모니터에서 가독성 위해 최대 폭 제한하고 싶으면 주석 해제
+    .wrap {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    */
   </style>
 </head>
 <body>
-  <!-- 저장소에 올린 이미지 경로 (예: ./assets/poster.png) -->
-  <img src="./assets/poster.png" alt="이미지">
+  <main class="page">
+    <!-- (선택) 폭 제한 쓰면 안쪽에 감싸기: <div class="wrap"> … </div> -->
+    <img class="viewer" src="./assets/poster.png" alt="이미지">
+  </main>
 </body>
 </html>
